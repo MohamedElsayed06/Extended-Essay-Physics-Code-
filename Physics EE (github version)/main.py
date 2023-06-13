@@ -64,7 +64,7 @@ m2 = 1
 L1 = 1
 L2 = 1
 # initial condition    the1, omega1, the2, omega2
-ans = odeint(dSdt, y0=[2.79, 0, 0, 0], t=t, args=(g, m1, m2, L1, L2))
+ans = odeint(dSdt, y0=[2.79, 0, 2.79, 0], t=t, args=(g, m1, m2, L1, L2))
 
 the1 = ans.T[0]
 the2 = ans.T[2]

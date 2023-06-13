@@ -33,7 +33,7 @@ def odes(x, t):
     return [theta1_d, omega1_d, theta2_d, omega2_d]
 
 
-x0 = [0.018, 0, 0, 0]
+x0 = [3, 0, 0, 0]
 
 t = np.linspace(0, 40, 1001)
 
