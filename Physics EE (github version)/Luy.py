@@ -123,15 +123,16 @@ _L2 = 1
 
 t = np.linspace(0, 40, 1000)
 g = 9.81
-m1 = 1
+m1 = 2.2
 m2 = 1
-L1 = 1
+L1 = 1.1
 L2 = 1
 
+epsilon = 0.0001
 # initial condition    the1, omega1, the2, omega2
-ans = odeint(dSdt, y0=[0, 0, 0, 0],
+ans = odeint(dSdt, y0=[(np.pi)/4, 0, np.pi/4, 0],
              t=t, args=(g, m1, m2, L1, L2))
-_ans = odeint(_dSdt, y0=[0, 0, 0, 0],
+_ans = odeint(_dSdt, y0=[((np.pi)/2) + epsilon, 0, np.pi/4, 0],
               t=_t, args=(_g, _m1, _m2, _L1, _L2))
 
 the1 = ans.T[0]
@@ -140,28 +141,18 @@ the2 = ans.T[2]
 _the1 = _ans.T[0]
 _the2 = _ans.T[2]
 
-# if the1[0] > np.pi:
-#    i = 0
-#    for j in the1:
-#        if i > 999:
-#            break
-#        the1[i] = the1[i] % (2*np.pi)
-#        the1[i] = 2*np.pi - j
-#        i = i+1
-#
-# if _the1[0] > np.pi:
-#    i = 0
-#    for j in _the1:
-#        if i > 999:
-#            break
-#        _the1[i] = the1[i] % (2*np.pi)
-#        _the1[i] = 2*np.pi - j
-#        i = i+1
-#
 
-plt.plot(_t, _the1)
-plt.plot(t, the1)
+k = 180/(np.pi)
+nthe1 = list(map(lambda x: x * k, (i for i in the1)))
+_nthe1 = list(map(lambda x: x * k, (i for i in _the1)))
+
+difference = abs(np.subtract(_nthe1, nthe1))
+inln = difference/epsilon
+ln = np.log(inln)
+
+
+plt.plot(t, ln)
 
 plt.xlabel("Time")
-plt.ylabel("Theta 1")
+plt.ylabel("ln(Delta/Epsilon)")
 plt.show()

@@ -57,17 +57,49 @@ def dSdt(A, _t, _g, _m1, _m2, _L1, _L2):
     ]
 
 
-_t = np.linspace(0, 40, 1001)
+_t = np.linspace(0, 40, 1000)
 _g = 9.81
 _m1 = 1
 _m2 = 1
 _L1 = 1
 _L2 = 1
 # initial condition    _the1, omega1, _the2, omega2
-_ans = odeint(dSdt, y0=[0, 0, 0, 0], t=_t, args=(_g, _m1, _m2, _L1, _L2))
+_ans = odeint(dSdt, y0=[(np.pi)-0.3, 0, 0, 0],
+              t=_t, args=(_g, _m1, _m2, _L1, _L2))
 
 _the1 = _ans.T[0]
 _the2 = _ans.T[2]
 
-plt.plot(_t, _the1)
+#result = [1]
+#for i in range(len(_the2)):
+#    if _the2[i] > 0:
+#        result.append((_the2[i] % np.pi) - np.pi)
+#    if _the2[i] < 0:
+#        result.append(np.pi - (_the2[i] % -(np.pi)))
+
+#i=0 
+#for i in _the2:
+#    if i > 999:
+#        break
+#    i = int(i)
+#    if _the2[i] < 0:
+#        _the2[i] = _the2[i] % (-(np.pi))
+#    if _the2[i] > 0:
+#        _the2[i] = _the2[i] % (np.pi)
+#    i = i+1
+
+i=0
+for i in _the2:
+
+    i = int(i)
+    _the2[i] % (np.pi)*2
+    if _the2[i] > np.pi:
+        _the2[i] -= 2 * np.pi
+    elif _the2[i] < -np.pi:
+        _the2[i] += 2 * np.pi
+    i = i+1
+
+print(_the2)
+
+plt.plot(_t, _the2)
 plt.show()
